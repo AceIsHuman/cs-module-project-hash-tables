@@ -96,9 +96,12 @@ class HashTable:
         ## if location has value, add to next node in linked list
         if self.storage[key_index] is not None:
             node = self.storage[key_index]
-            while node.next is not None:
+            while node.next is not None and node.key != key:
                 node = node.next
-            node.next = HashTableEntry(key, value)
+            if node.key == key:
+                node.value = value
+            else:
+                node.next = HashTableEntry(key, value)
         else:
         # insert value at key_index in hashtable
             self.storage[key_index] = HashTableEntry(key, value)
