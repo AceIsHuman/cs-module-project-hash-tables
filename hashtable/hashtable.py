@@ -55,8 +55,16 @@ class HashTable:
         Implement this, and/or DJB2.
         """
 
-        # Your code here
+        # create fnv_offset_basis
+        hash = 14695981039346656037
+        # iterate over data
+        for char in key:
+        # hash = offset_basis multiplied by FNV_prime
+            hash = hash * 1099511628211
+        # hash = hash xor octet_of_data
+            hash = hash ^ ord(char)
 
+        return hash
 
     def djb2(self, key):
         """
