@@ -124,8 +124,11 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
-
+        key_index = self.hash_index(key)
+        node = self.storage[key_index]
+        while node.key != key:
+            node = node.next
+        return node.value
 
     def resize(self, new_capacity):
         """
