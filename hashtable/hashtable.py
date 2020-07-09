@@ -113,7 +113,18 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        key_index = self.hash_index(key)
+        node = self.storage[key_index]
+        if node is None:
+            return 0
+        if (node.key == key):
+            self.storage[key_index] = None # This would also delete any linked entries
+            return 1
+        else:
+            while node.next.key != key:
+                node = node.next
+            node.next = None
+            return 1
 
 
     def get(self, key):
@@ -126,6 +137,8 @@ class HashTable:
         """
         key_index = self.hash_index(key)
         node = self.storage[key_index]
+        if node is None:
+            return None
         while node.key != key:
             node = node.next
         return node.value
