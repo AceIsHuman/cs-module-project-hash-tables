@@ -80,8 +80,8 @@ class HashTable:
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
-        return self.djb2(key) % self.capacity
+        return self.fnv1(key) % self.capacity
+        # return self.djb2(key) % self.capacity
 
     def put(self, key, value):
         """
@@ -91,7 +91,18 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # get key_index using self.hash_index(key)
+        key_index = self.hash_index(key)
+        ## if location has value, add to next node in linked list
+        if self.storage[key_index] is not None:
+            node = self.storage[key_index]
+            while node.next is not None:
+                node = node.next
+            node.next = HashTableEntry(key, value)
+        else:
+        # insert value at key_index in hashtable
+            self.storage[key_index] = HashTableEntry(key, value)
+
 
 
     def delete(self, key):
