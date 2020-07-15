@@ -123,16 +123,25 @@ class HashTable:
         Implement this.
         """
         key_index = self.hash_index(key)
-        node = self.storage[key_index]
-        if node is None:
+        key_to_remove = self.storage[key_index]
+        if key_to_remove is None:
             return 0
-        if (node.key == key):
-            self.storage[key_index] = None # This would also delete any linked entries
+        if (key_to_remove.key == key):
+            if key_to_remove.next is not None:
+                self.storage[key_index] = key_to_remove.next
+            else:
+                self.storage[key_index] = None
             return 1
         else:
-            while node.next.key != key:
-                node = node.next
-            node.next = None
+            previous_key = key_to_remove
+            key_to_remove = key_to_remove.next
+            while key_to_remove.key != key:
+                previous_key = key_to_remove
+                key_to_remove = key_to_remove.next
+            if key_to_remove.next is not None:
+                previous_key.next = key_to_remove.next
+            else:
+                previous_key.next = None
             return 1
 
 
@@ -146,11 +155,11 @@ class HashTable:
         """
         key_index = self.hash_index(key)
         node = self.storage[key_index]
-        if node is None:
-            return None
-        while node.key != key:
+        while node is not None:
+            if node.key == key:
+                return node.value
             node = node.next
-        return node.value
+        return None
 
     def resize(self, new_capacity):
         """
