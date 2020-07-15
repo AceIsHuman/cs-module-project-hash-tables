@@ -25,7 +25,6 @@ class HashTable:
         self.capacity = capacity
         self.load = 0
 
-
     def get_num_slots(self):
         """
         Return the length of the list you're using to hold the hash
@@ -38,7 +37,6 @@ class HashTable:
         """
         return self.capacity
 
-
     def get_load_factor(self):
         """
         Return the load factor for this hash table.
@@ -46,7 +44,6 @@ class HashTable:
         Implement this.
         """
         return self.load / self.capacity
-
 
     def fnv1(self, key):
         """
@@ -79,8 +76,6 @@ class HashTable:
 
         return hash
 
-
-
     def hash_index(self, key):
         """
         Take an arbitrary key and return a valid integer index
@@ -108,11 +103,11 @@ class HashTable:
                 node.value = value
             else:
                 node.next = HashTableEntry(key, value)
+                self.load = self.load + 1 
         else:
         # insert value at key_index in hashtable
             self.storage[key_index] = HashTableEntry(key, value)
-
-
+            self.load = self.load + 1 
 
     def delete(self, key):
         """
@@ -131,6 +126,7 @@ class HashTable:
                 self.storage[key_index] = key_to_remove.next
             else:
                 self.storage[key_index] = None
+            self.load = self.load - 1
             return 1
         else:
             previous_key = key_to_remove
@@ -142,8 +138,8 @@ class HashTable:
                 previous_key.next = key_to_remove.next
             else:
                 previous_key.next = None
+            self.load = self.load - 1
             return 1
-
 
     def get(self, key):
         """
@@ -161,6 +157,18 @@ class HashTable:
             node = node.next
         return None
 
+    def resize_helper(self, hash_entry, new_storage):
+        new_key_index = self.hash_index(hash_entry.key)
+        new_hash_entry = HashTableEntry(hash_entry.key, hash_entry.value)
+
+        new_slot = new_storage[new_key_index]
+        if new_slot is not None:
+            while new_slot.next is not None:
+                new_slot = new_slot.next
+            new_slot.next = new_hash_entry
+        else:
+            new_storage[new_key_index] = new_hash_entry
+
     def resize(self, new_capacity):
         """
         Changes the capacity of the hash table and
@@ -168,8 +176,16 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        self.capacity = new_capacity
+        new_storage = [None] * self.capacity
 
+        for key_index in self.storage:
+            hash_entry = key_index
+            while hash_entry is not None:
+                self.resize_helper(hash_entry, new_storage)
+                hash_entry = hash_entry.next
+
+        self.storage = new_storage
 
 
 if __name__ == "__main__":
