@@ -1,5 +1,16 @@
 def no_dups(s):
-    # Your code here
+    exists = {}
+    words = []
+
+    s = s.split()
+    for word in s:
+        if word in exists:
+            continue
+        else:
+            exists[word] = word
+            words.append(word)
+
+    return ' '.join(words)
 
 
 
