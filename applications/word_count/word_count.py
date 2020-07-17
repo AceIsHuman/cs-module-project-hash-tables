@@ -1,5 +1,21 @@
 def word_count(s):
-    # Your code here
+    word_count = {}
+    char_to_ignore = ['"',':',';',',','.','-','+','=','/',"\\",'|','[',']','{','}','(',')','*','^','&']
+
+    words = s.split()
+    for word in words:
+        word = word.lower()
+        if not word.isalpha():
+            ignored_char = ''
+            for char in word:
+                if char not in char_to_ignore:
+                    ignored_char = ignored_char + char
+            word = ignored_char
+        if word in word_count:
+            word_count[word] = word_count[word] + 1
+        elif word != '': word_count[word] = 1
+
+    return word_count
 
 
 
