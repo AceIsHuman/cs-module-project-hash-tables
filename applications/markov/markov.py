@@ -24,3 +24,20 @@ def start_word(words):
         start_word = random.choice(words)
 
     return start_word
+
+def is_stop_word(word):
+    l = len(word)
+    punct = ['.','?','!']
+    if word[l-1] in punct:
+        return True
+    elif (word[l-1] == '"') and (word[l-2] in punct):
+        return True
+
+    return False
+
+def gen_sentence(words):
+    word = start_word(list(words))
+    print(word, end=" ")
+    while not is_stop_word(word):
+        word = random.choice(words[word])
+        print(word, end=" ")
