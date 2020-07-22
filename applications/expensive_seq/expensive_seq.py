@@ -1,8 +1,18 @@
-# Your code here
+expensive_dict = {}
 
 
 def expensive_seq(x, y, z):
-    # Your code here
+    key = (x,y,z)
+    if key in expensive_dict:
+        return expensive_dict[key]
+    elif x <= 0:
+        total = y + z
+        expensive_dict[key] = total
+        return total
+    elif x > 0:
+        total = expensive_seq(x-1, y+1, z) + expensive_seq(x-2, y+2, z*2) + expensive_seq(x-3, y+3, z*3)
+        expensive_dict[key] = total
+        return total
 
 
 

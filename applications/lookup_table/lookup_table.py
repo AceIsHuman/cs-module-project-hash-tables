@@ -1,5 +1,7 @@
-# Your code here
+import random
+import math
 
+slowfun_dict = {}
 
 def slowfun_too_slow(x, y):
     v = math.pow(x, y)
@@ -14,9 +16,21 @@ def slowfun(x, y):
     Rewrite slowfun_too_slow() in here so that the program produces the same
     output, but completes quickly instead of taking ages to run.
     """
-    # Your code here
+    key = f'{x}_{y}'
+    if key in slowfun_dict:
+        return slowfun_dict[key]
+    
+    v = math.pow(x, y)
+    v = math.factorial(v)
+    v //= (x + y)
+    v %= 982451653
+    slowfun_dict[key] = v
+    
+    return v
 
-
+for x in range(2, 14):
+    for y in range(3, 6):
+        slowfun(x, y)
 
 # Do not modify below this line!
 
