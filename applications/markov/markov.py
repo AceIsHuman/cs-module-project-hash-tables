@@ -16,5 +16,11 @@ for i, word in enumerate(words):
         words_to_follow[word] = [words[i+1]]
 
 # TODO: construct 5 random sentences
-# Your code here
+def start_word(words):
+    start_word = random.choice(words)
+    while (not start_word[0].isupper()):
+        if (start_word[0] == '"') and start_word[1].isupper():
+            break
+        start_word = random.choice(words)
 
+    return start_word
