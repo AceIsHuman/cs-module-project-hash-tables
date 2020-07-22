@@ -41,3 +41,16 @@ def gen_sentence(words):
     while not is_stop_word(word):
         word = random.choice(words[word])
         print(word, end=" ")
+    print() # extra print statement to give terminal new line following final word
+
+print('1: ', end="")
+gen_sentence(words_to_follow)
+print('\n2: ', end="")
+gen_sentence(words_to_follow)
+print('\n3: ', end="")
+gen_sentence(words_to_follow)
+print('\n4: ', end="")
+gen_sentence(words_to_follow)
+print('\n5: ', end="")
+gen_sentence(words_to_follow)
+
